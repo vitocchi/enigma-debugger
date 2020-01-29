@@ -13,6 +13,7 @@ import Header from "./Header";
 import "../App.css";
 // Imports - Actions (Redux)
 import { initializeEnigma, initializeAccounts } from '../actions';
+import TaskDefinitions from "./TaskDefinitions.js";
 
 const styles = theme => ({
     root: {
@@ -54,7 +55,7 @@ class App extends Component {
             return (
                 <div className="App">
                     <Header/>
-                    <Message color="green">Enigma setup has loaded!</Message>
+                    <TaskDefinitions/>
                 </div>
             );
         }
