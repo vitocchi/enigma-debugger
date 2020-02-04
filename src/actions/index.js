@@ -1,3 +1,5 @@
+import {log} from "../utils/Logger";
+
 export const initializeEnigma = (enigma) => {
     return {
         type: 'ENIGMA_INITIALIZED',
@@ -19,10 +21,8 @@ export const changeTaskArg = (payload) => {
     };
 }
 
-export const dispatchTask = (fn) => {
-    return (dispatch, getState) => {
-        console.log("dispatchTask")
-        console.time('dispatch')
+export const computeTask = (fn) => {
+    return (_dispatch, getState) => {
         const {enigma, tasks} = getState()
         let fnIndex = tasks.findIndex(e => e.fn === fn);
         const argTypes = tasks[fnIndex].args.map(arg => arg.type)
@@ -31,12 +31,5 @@ export const dispatchTask = (fn) => {
             arg.value, arg.type   
         ]))
         enigma.computeTask(taskFn, taskArgs, tasks[fnIndex].outputType)
-            .then((output) => {
-                console.log("task output:" + output)
-            })
-            .catch((e) => {
-                console.log('task failed:' + e.message)
-            })
-            .finally(() => console.timeEnd('dispatch'))
     }
 }

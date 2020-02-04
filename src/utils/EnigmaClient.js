@@ -1,4 +1,5 @@
 import { utils, eeConstants } from "enigma-js";
+import { log, group, groupEnd } from "./Logger";
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -19,14 +20,18 @@ class EnigmaClient {
         this.taskGasPx = utils.toGrains(1);
     }
     async computeTask(taskFn, taskArgs, outputType) {
-        console.log('Task start');
-        console.log(taskFn);
-        console.log(taskArgs);
-        return await this.throwTask(taskFn, taskArgs)
+        log("Compute Task")
+        log(taskFn);
+        log(taskArgs);
+        const output = await this.throwTask(taskFn, taskArgs)
             .then(this.waitForTaskSuccess)
             .then(this.getTaskResult)
             .then(this.decryptTaskResult)
             .then((task) => this.decodeOutput(task, outputType))
+            .catch((e) => {
+                log('Task failed ' + e.message)
+            })
+        log("Task output:" + output)
     }
     throwTask(taskFn, taskArgs) {
         return new Promise((resolve, reject) => {
@@ -36,17 +41,16 @@ class EnigmaClient {
         });
     }
     async waitForTaskSuccess(task) {
-        console.log('Task pending');
+        log('Task pending...');
         while (task.ethStatus === 1) {
             task = await this.enigma.getTaskRecordStatus(task);
             await sleep(1000);
         }
         if (task.ethStatus === 2 ) {
-            console.log('Task succeeded');
+            log('Task succeeded ✔');
             return task
         } else {
-            console.log('Task failed');
-            throw new Error('task failed')
+            throw new Error("ethStatus is " + task.ethStatus)
         }
     }
     getTaskResult(task) {
@@ -57,7 +61,10 @@ class EnigmaClient {
         });
     }
     async decryptTaskResult(task) {
-        return (await this.enigma.decryptTaskResult(task)).decryptedOutput;
+        group()
+        const output =  (await this.enigma.decryptTaskResult(task)).decryptedOutput;
+        groupEnd()
+        return output
     }
     decodeOutput(output, outputType) {
         return this.enigma.web3.eth.abi.decodeParameter(outputType, output);

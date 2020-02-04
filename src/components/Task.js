@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Card, Typography, CardContent, Button, CardActions, TextField } from "@material-ui/core";
-import { changeTaskArg, dispatchTask } from '../actions';
+import { changeTaskArg, computeTask } from '../actions';
 import connect from "react-redux/es/connect/connect";
 class Task extends Component {
     handleClickCompute = () => {
-        this.props.dispatchTask(this.props.task.fn)
+        this.props.computeTask(this.props.task.fn)
     }
     handleClickReset = () => {
         for(let arg of this.props.task.args) {
@@ -53,6 +53,6 @@ export default connect(
     null,
     {
         changeTaskArg,
-        dispatchTask
+        computeTask
     }
 )(Task);

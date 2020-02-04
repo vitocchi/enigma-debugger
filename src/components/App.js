@@ -31,9 +31,7 @@ class App extends Component {
         // Initialize enigma-js client library (including web3)
         const enigma = await getEnigmaInit();
         const accounts = await enigma.web3.eth.getAccounts();
-        console.log("init")
         const contract = await this.initDeployedContract(enigma)
-        console.log("finish")
         const enigmaClient = new EnigmaClient(enigma, accounts, contract)
         this.props.initializeEnigma(enigmaClient);
     }
