@@ -28,13 +28,12 @@ class Task extends Component {
             <Card
                 style={{
                     maxWidth: 275,
-                    margin: 20
                 }}>
                 <CardContent>
                     <Typography variant="h5" gutterBottom>
                         {this.props.task.fn}
                     </Typography>
-                        {argField}
+                    {argField}
                 </CardContent>
                 <CardActions>
                     <Button
