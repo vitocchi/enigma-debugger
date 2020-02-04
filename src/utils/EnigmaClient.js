@@ -18,7 +18,7 @@ class EnigmaClient {
         this.taskGasLimit = 1000000;
         this.taskGasPx = utils.toGrains(1);
     }
-    async computeTask(taskFn, taskArgs) {
+    async computeTask(taskFn, taskArgs, outputType) {
         console.log('Task start');
         console.log(taskFn);
         console.log(taskArgs);
@@ -26,6 +26,7 @@ class EnigmaClient {
             .then(this.waitForTaskSuccess)
             .then(this.getTaskResult)
             .then(this.decryptTaskResult)
+            .then((task) => this.decodeOutput(task, outputType))
     }
     throwTask(taskFn, taskArgs) {
         return new Promise((resolve, reject) => {
@@ -57,6 +58,9 @@ class EnigmaClient {
     }
     async decryptTaskResult(task) {
         return (await this.enigma.decryptTaskResult(task)).decryptedOutput;
+    }
+    decodeOutput(output, outputType) {
+        return this.enigma.web3.eth.abi.decodeParameter(outputType, output);
     }
 }
 
