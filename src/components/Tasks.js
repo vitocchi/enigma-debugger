@@ -1,26 +1,28 @@
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
 import Task from "./Task";
-import { Grid } from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 
 class Tasks extends Component {
     render() {
-        let cards = this.props.tasks.map((task) => {
+        let tasks = this.props.tasks.map((task) => {
             return (
-                <Grid
-                    key = {task.fn}
-                    item xs={4}
-                >
-                    <Task
-                        task={task}
-                    />
-                </Grid>
+                <Task
+                    key={task.fn}
+                    task={task}
+                />
             );
         });
         return (
-            <Grid container spacing={3}>
-                {cards}
-            </Grid>
+            <Container>
+                <Grid
+                    container
+                    spacing={3}
+                    justify="space-around"
+                >
+                    {tasks}
+                </Grid>
+            </Container>
         );
     }
 }

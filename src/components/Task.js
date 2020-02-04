@@ -25,7 +25,11 @@ class Task extends Component {
             )
         })
         return (
-            <Card style={{maxWidth: 275}}>
+            <Card
+                style={{
+                    maxWidth: 275,
+                    margin: 20
+                }}>
                 <CardContent>
                     <Typography variant="h5" gutterBottom>
                         {this.props.task.fn}

@@ -1,5 +1,6 @@
 import { combineReducers} from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import { taskDefinition } from '../taskDefinition';
 
 const initializeEnigmaReducer = (enigma = null, action) => {
     if (action.type === 'ENIGMA_INITIALIZED') {
@@ -17,26 +18,7 @@ const notifyMessageReducer = (notification = {open: false, message: ''}, action)
     return notification;
 };
 
-const tD = [
-    {
-        fn: 'additio',
-        args: [
-            {
-                name: 'x',
-                type: 'uint256',
-                value: '1',
-            },
-            {
-                name: 'y',
-                type: 'uint256',
-                value: '2',
-            },
-        ],
-        outputType: 'uint256',
-    },
-];
-
-const tasksReducer = (tasks = tD, action) => {
+const tasksReducer = (tasks = taskDefinition, action) => {
     if (action.type === 'TASK_ARG_CHANGED') {
         let fnIndex = tasks.findIndex(e => e.fn === action.payload.fn);
         let argIndex = tasks[fnIndex].args.findIndex(e => e.name === action.payload.arg);
@@ -59,7 +41,7 @@ const tasksReducer = (tasks = tD, action) => {
             ...tasks.slice(fnIndex + 1),
         ];
     }
-    return tD;
+    return tasks;
 }
 
 export default combineReducers({
