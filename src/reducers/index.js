@@ -19,7 +19,7 @@ const notifyMessageReducer = (notification = {open: false, message: ''}, action)
 
 const tD = [
     {
-        fn: 'addition',
+        fn: 'additio',
         args: [
             {
                 name: 'x',

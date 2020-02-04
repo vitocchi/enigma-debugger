@@ -23,7 +23,7 @@ class EnigmaClient {
         log("Compute Task")
         log(taskFn);
         log(taskArgs);
-        const output = await this.throwTask(taskFn, taskArgs)
+        await this.throwTask(taskFn, taskArgs)
             .then(this.waitForTaskSuccess)
             .then(this.getTaskResult)
             .then(this.decryptTaskResult)
@@ -31,7 +31,6 @@ class EnigmaClient {
             .catch((e) => {
                 log('Task failed ' + e.message)
             })
-        log("Task output:" + output)
     }
     throwTask(taskFn, taskArgs) {
         return new Promise((resolve, reject) => {
@@ -67,7 +66,9 @@ class EnigmaClient {
         return output
     }
     decodeOutput(output, outputType) {
-        return this.enigma.web3.eth.abi.decodeParameter(outputType, output);
+        const decoded = this.enigma.web3.eth.abi.decodeParameter(outputType, output);
+        log("Task output:" + decoded)
+        return decoded
     }
 }
 
