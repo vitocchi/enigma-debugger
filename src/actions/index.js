@@ -1,5 +1,3 @@
-import {log} from "../utils/Logger";
-
 export const initializeEnigma = (enigma) => {
     return {
         type: 'ENIGMA_INITIALIZED',

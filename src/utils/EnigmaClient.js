@@ -66,7 +66,12 @@ class EnigmaClient {
         return output
     }
     decodeOutput(output, outputType) {
-        const decoded = this.enigma.web3.eth.abi.decodeParameter(outputType, output);
+        let decoded
+        if (outputType === 'void') {
+            decoded = ''
+        } else {
+            decoded = this.enigma.web3.eth.abi.decodeParameter(outputType, output);
+        }
         log("Task output:" + decoded)
         return decoded
     }
