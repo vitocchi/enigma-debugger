@@ -14,11 +14,14 @@ class Tasks extends Component {
             );
         });
         return (
-            <Container>
+            <Container
+                style={{ paddingTop: "10px" }}
+            >
                 <Grid
                     container
                     spacing={3}
                     justify="space-around"
+                    style={{ paddingTop: "10px" }}
                 >
                     {tasks}
                 </Grid>
