@@ -1,5 +1,3 @@
-import EnigmaClient from "../utils/EnigmaClient";
-
 export const initializeEnigma = (enigma) => {
     return {
         type: 'ENIGMA_INITIALIZED',
@@ -24,10 +22,8 @@ export const changeTaskArg = (payload) => {
 export const dispatchTask = (fn) => {
     return (dispatch, getState) => {
         log("dispatchTask")
-        log(fn)
         const {enigma, tasks} = getState()
         let fnIndex = tasks.findIndex(e => e.fn === fn);
-        log(getState().tasks[fn])
         const argTypes = tasks[fnIndex].args.map(arg => arg.type)
         const taskFn = fn + "(" + argTypes.join() + ")"
         const taskArgs = tasks[fnIndex].args.map(arg => ([

@@ -24,12 +24,12 @@ const tD = [
             {
                 name: 'x',
                 type: 'uint256',
-                value: null,
+                value: '1',
             },
             {
                 name: 'y',
                 type: 'uint256',
-                value: null,
+                value: '2',
             },
         ],
         outputType: 'uint256',
@@ -41,7 +41,23 @@ const tasksReducer = (tasks = tD, action) => {
         let fnIndex = tasks.findIndex(e => e.fn === action.payload.fn);
         let argIndex = tasks[fnIndex].args.findIndex(e => e.name === action.payload.arg);
         tasks[fnIndex].args[argIndex].value = action.payload.value;
-        return tD;
+        return [
+            ...tasks.slice(0, fnIndex),
+            {
+                fn: tasks[fnIndex].fn,
+                args: [
+                    ...tasks[fnIndex].args.slice(0, argIndex),
+                    {
+                        name: tasks[fnIndex].args[argIndex].name,
+                        type: tasks[fnIndex].args[argIndex].type,
+                        value: action.payload.value
+                    },
+                    ...tasks[fnIndex].args.slice(argIndex+1)
+                ],
+                outputType: tasks[fnIndex].outputType
+            },
+            ...tasks.slice(fnIndex + 1),
+        ];
     }
     return tD;
 }

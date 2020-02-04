@@ -1,16 +1,21 @@
 import React, { Component } from "react";
-import { Card, Typography, CardContent, TextField, CardActionArea, Button } from "@material-ui/core";
+import { Card, Typography, CardContent, Button, CardActions, TextField } from "@material-ui/core";
 import { changeTaskArg, dispatchTask } from '../actions';
 import connect from "react-redux/es/connect/connect";
 class Task extends Component {
-    handleClickButton = () => {
+    handleClickCompute = () => {
         this.props.dispatchTask(this.props.task.fn)
+    }
+    handleClickReset = () => {
+        for(let arg of this.props.task.args) {
+            this.props.changeTaskArg({fn: this.props.task.fn, arg: arg.name, value: ''})
+        }
     }
     render() {
         let args = this.props.task.args;
         let argField = args.map((arg) => {
             return (
-                <div>
+                <div key={arg.name}>
                     {arg.name}:{arg.type}
                     <TextField 
                         value = {arg.value}
@@ -27,12 +32,18 @@ class Task extends Component {
                     </Typography>
                         {argField}
                 </CardContent>
-                <CardActionArea>
+                <CardActions>
                     <Button
-                        onClick = {this.handleClickButton}>
-                        compute
+                        onClick={this.handleClickCompute}
+                    >
+                        COMPUTE
                     </Button>
-                </CardActionArea>
+                    <Button
+                        onClick={this.handleClickReset}
+                    >
+                        RESET
+                    </Button>
+                </CardActions>
             </Card>
         );
     }

@@ -7,7 +7,10 @@ class Tasks extends Component {
     render() {
         let cards = this.props.tasks.map((task) => {
             return (
-                <Grid item xs={4}>
+                <Grid
+                    key = {task.fn}
+                    item xs={4}
+                >
                     <Task
                         task={task}
                     />

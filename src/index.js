@@ -10,8 +10,11 @@ import thunk from 'redux-thunk'
 
 import * as serviceWorker from './serviceWorker';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
 ReactDOM.render(
-    <Provider store={createStore(reducers, applyMiddleware(thunk))}>
+    <Provider store={createStore(reducers, composeEnhancers(applyMiddleware(thunk)))}>
         <App />
     </Provider>,
     document.getElementById('root'));
