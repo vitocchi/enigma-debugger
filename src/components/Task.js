@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Card, Typography, CardContent, TextField, CardActionArea, Button } from "@material-ui/core";
-import { changeTaskArg } from '../actions';
+import { changeTaskArg, dispatchTask } from '../actions';
 import connect from "react-redux/es/connect/connect";
 class Task extends Component {
-    handleClickbutton = () => {
-        console.log(this.state)
+    handleClickButton = () => {
+        this.props.dispatchTask(this.props.task.fn)
     }
     render() {
         let args = this.props.task.args;
@@ -29,7 +29,7 @@ class Task extends Component {
                 </CardContent>
                 <CardActionArea>
                     <Button
-                        onClick = {this.handleClickbutton}>
+                        onClick = {this.handleClickButton}>
                         compute
                     </Button>
                 </CardActionArea>
@@ -40,5 +40,8 @@ class Task extends Component {
 
 export default connect(
     null,
-    { changeTaskArg }
+    {
+        changeTaskArg,
+        dispatchTask
+    }
 )(Task);

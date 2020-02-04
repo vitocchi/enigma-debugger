@@ -9,14 +9,6 @@ const initializeEnigmaReducer = (enigma = null, action) => {
     return enigma;
 };
 
-const initializeAccountsReducer = (accounts = [], action) => {
-    if (action.type === 'ACCOUNTS_INITIALIZED') {
-        return action.payload;
-    }
-
-    return accounts;
-};
-
 const notifyMessageReducer = (notification = {open: false, message: ''}, action) => {
     if (action.type === 'MESSAGE_NOTIFIED') {
         return action.payload;
@@ -31,16 +23,16 @@ const tD = [
         args: [
             {
                 name: 'x',
-                type: 'u256',
+                type: 'uint256',
                 value: null,
             },
             {
                 name: 'y',
-                type: 'u256',
+                type: 'uint256',
                 value: null,
             },
         ],
-        outputType: 'u256',
+        outputType: 'uint256',
     },
 ];
 
@@ -56,7 +48,6 @@ const tasksReducer = (tasks = tD, action) => {
 
 export default combineReducers({
     enigma: initializeEnigmaReducer,
-    accounts: initializeAccountsReducer,
     notification: notifyMessageReducer,
     form: formReducer,
     tasks: tasksReducer

@@ -12,8 +12,9 @@ import getEnigmaInit from "../utils/getEnigmaInit.js";
 import Header from "./Header";
 import "../App.css";
 // Imports - Actions (Redux)
-import { initializeEnigma, initializeAccounts } from '../actions';
+import { initializeEnigma } from '../actions';
 import Tasks from "./Tasks.js";
+import EnigmaClient from "../utils/EnigmaClient.js";
 
 const styles = theme => ({
     root: {
@@ -30,12 +31,17 @@ class App extends Component {
     async componentDidMount() {
         // Initialize enigma-js client library (including web3)
         const enigma = await getEnigmaInit();
-        // Create redux action to initialize set state variable containing enigma-js client library
-        this.props.initializeEnigma(enigma);
-        // Initialize unlocked accounts
         const accounts = await enigma.web3.eth.getAccounts();
-        // Create redux action to initialize set state variable containing unlocked accounts
-        this.props.initializeAccounts(accounts);
+        console.log("init")
+        const contract = await this.initDeployedContract(enigma)
+        console.log("finish")
+        const enigmaClient = new EnigmaClient(enigma, accounts, contract)
+        this.props.initializeEnigma(enigmaClient);
+    }
+    initDeployedContract = async (enigma) => {
+        const secretContractCount = await enigma.enigmaContract.methods.countSecretContracts().call();
+        const deployedAddress = (await enigma.enigmaContract.methods.getSecretContractAddresses(secretContractCount-1, secretContractCount).call())[0];
+        return deployedAddress
     }
 
     render() {
@@ -64,5 +70,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps,
-    { initializeEnigma, initializeAccounts }
+    { initializeEnigma }
 )(withStyles(styles)(App));
