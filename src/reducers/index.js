@@ -30,47 +30,27 @@ const tD = [
         fn: 'addition',
         args: [
             {
-                variable: 'x',
-                type: 'u256'
+                name: 'x',
+                type: 'u256',
+                value: null,
             },
             {
-                variable: 'y',
-                type: 'u256'
-            }
-        ],
-        outputType: 'u256',
-    },
-    {
-        fn: 'addition',
-        args: [
-            {
-                variable: 'x',
-                type: 'u256'
+                name: 'y',
+                type: 'u256',
+                value: null,
             },
-            {
-                variable: 'y',
-                type: 'u256'
-            }
-        ],
-        outputType: 'u256',
-    },
-    {
-        fn: 'addition',
-        args: [
-            {
-                variable: 'x',
-                type: 'u256'
-            },
-            {
-                variable: 'y',
-                type: 'u256'
-            }
         ],
         outputType: 'u256',
     },
 ];
 
-const taskDefinitionsReducer = (taskDefinitions = tD, action) => {
+const tasksReducer = (tasks = tD, action) => {
+    if (action.type === 'TASK_ARG_CHANGED') {
+        let fnIndex = tasks.findIndex(e => e.fn === action.payload.fn);
+        let argIndex = tasks[fnIndex].args.findIndex(e => e.name === action.payload.arg);
+        tasks[fnIndex].args[argIndex].value = action.payload.value;
+        return tD;
+    }
     return tD;
 }
 
@@ -79,5 +59,5 @@ export default combineReducers({
     accounts: initializeAccountsReducer,
     notification: notifyMessageReducer,
     form: formReducer,
-    taskDefinitions: taskDefinitionsReducer
+    tasks: tasksReducer
 });

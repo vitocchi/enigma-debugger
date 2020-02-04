@@ -18,3 +18,10 @@ export const notifyMessage = (notification) => {
         payload: notification
     };
 };
+
+export const changeTaskArg = (payload) => {
+    return {
+        type: 'TASK_ARG_CHANGED',
+        payload: payload,
+    };
+}

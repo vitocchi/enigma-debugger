@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
-import TaskDefinition from "./TaskDefinition";
+import Task from "./Task";
 import { Grid } from "@material-ui/core";
 
-class TaskDefinitions extends Component {
+class Tasks extends Component {
     render() {
-        let cards = this.props.taskDefinitions.map((taskDefinition) => {
+        let cards = this.props.tasks.map((task) => {
             return (
                 <Grid item xs={4}>
-                    <TaskDefinition taskDefinition={taskDefinition}/>
+                    <Task
+                        task={task}
+                    />
                 </Grid>
             );
         });
@@ -22,8 +24,8 @@ class TaskDefinitions extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        taskDefinitions: state.taskDefinitions,
+        tasks: state.tasks,
     }
 };
 
-export default connect(mapStateToProps, {})(TaskDefinitions);
+export default connect(mapStateToProps, {})(Tasks);

@@ -13,7 +13,7 @@ import Header from "./Header";
 import "../App.css";
 // Imports - Actions (Redux)
 import { initializeEnigma, initializeAccounts } from '../actions';
-import TaskDefinitions from "./TaskDefinitions.js";
+import Tasks from "./Tasks.js";
 
 const styles = theme => ({
     root: {
@@ -27,10 +27,6 @@ const styles = theme => ({
 });
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     async componentDidMount() {
         // Initialize enigma-js client library (including web3)
         const enigma = await getEnigmaInit();
@@ -55,7 +51,7 @@ class App extends Component {
             return (
                 <div className="App">
                     <Header/>
-                    <TaskDefinitions/>
+                    <Tasks/>
                 </div>
             );
         }
