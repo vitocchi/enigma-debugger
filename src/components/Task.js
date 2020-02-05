@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Typography, CardContent, Button, CardActions, TextField } from "@material-ui/core";
+import { Card, Typography, CardContent, Button, CardActions, TextField, InputLabel, CardHeader } from "@material-ui/core";
 import { changeTaskArg, computeTask } from '../actions';
 import connect from "react-redux/es/connect/connect";
 class Task extends Component {
@@ -14,12 +14,15 @@ class Task extends Component {
     render() {
         let args = this.props.task.args;
         let argField = args.map((arg) => {
+            let label = arg.name + ": " + arg.type
             return (
-                <div key={arg.name}>
-                    {arg.name}:{arg.type}
+                <div key={arg.name} style={{padding: "10px"}}>
+                    <InputLabel>{label}</InputLabel>
                     <TextField 
                         value = {arg.value}
                         onChange = {(e) => this.props.changeTaskArg({fn:this.props.task.fn, arg: arg.name, value:e.target.value})}
+                        size="small"
+                        variant="outlined"
                     />
                 </div>
             )
@@ -29,19 +32,22 @@ class Task extends Component {
                 style={{
                     maxWidth: 275,
                 }}>
+                <CardHeader
+                    title={this.props.task.fn}
+                    style={{backgroundColor: "lightgray"}}
+                />
                 <CardContent>
-                    <Typography variant="h5" gutterBottom>
-                        {this.props.task.fn}
-                    </Typography>
                     {argField}
                 </CardContent>
                 <CardActions>
                     <Button
+                        color="primary"
                         onClick={this.handleClickCompute}
                     >
                         COMPUTE
                     </Button>
                     <Button
+                        color="primary"
                         onClick={this.handleClickReset}
                     >
                         RESET

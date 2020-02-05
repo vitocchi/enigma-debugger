@@ -1,6 +1,6 @@
 import { combineReducers} from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { taskDefinition } from '../taskDefinition';
+import taskDefinition from '../taskDefinition.json';
 
 const initializeEnigmaReducer = (enigma = null, action) => {
     if (action.type === 'ENIGMA_INITIALIZED') {

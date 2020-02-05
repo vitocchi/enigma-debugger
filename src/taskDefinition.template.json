@@ -1,0 +1,18 @@
+[
+    {
+        "fn": "addition",
+        "args": [
+            {
+                "name": "x",
+                "type": "uint256",
+                "value": 0
+            },
+            {
+                "name": "y",
+                "type": "uint256",
+                "value": 1
+            }
+        ],
+        "outputType": "uint256"
+    }
+]
